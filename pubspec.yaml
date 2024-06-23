@@ -1,0 +1,35 @@
+name: waiting_presentation
+description: "A waiting presentation"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+
+  lottie: ^3.1.2
+  waiting: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/presentation/images/
+    - assets/presentation/lottie/
+
+  fonts:
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/presentation/fonts/PlusJakartaSans-VariableFont_wght.ttf
+    - family: Abel
+      fonts:
+        - asset: assets/presentation/fonts/Abel-Regular.ttf
