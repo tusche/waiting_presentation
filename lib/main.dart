@@ -1,14 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:waiting_presentation/scene_presentation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_highlighting/flutter_highlighting.dart';
+import 'package:flutter_highlighting/themes/github.dart';
+import 'package:highlighting/languages/dart.dart';
 import 'package:waiting/scene/scene_controller.dart';
+import 'package:waiting/waiting.dart';
+import 'package:waiting_presentation/scene_presentation.dart';
 
 enum Slides {
   intro,
   introPleaseWait,
-  relativityAlbertGirl,
-  relativityAlbertStove,
-  waiting_2,
-  hardware
+  introAlbertGirl,
+  introAlbertStove,
+  title,
+  patience,
+  standards,
+  now,
+  nowEye,
+  nowHardware,
+  inAMoment,
+  inAMomentInternet,
+  inAMomentInfinity,
+  later,
+  laterRoleplaying,
+  laterPong,
+  inTime,
+  inTimeIndicator,
+  summary,
+  widgetContent,
+  widgetScrim,
+  widgetProgress,
+  widgetTimeout,
+  waitingContent,
+  waiting,
+  qr,
+  acquiredPatience,
+  acquiredPatienceCode,
+  thanks,
 }
 
 void main() {
@@ -52,62 +80,205 @@ class PresentationAppState extends State<PresentationApp>
     _sceneController = SceneController(this, Slides.values);
   }
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
+    var acquiredPatienceCode = '''
+    main() {
+      print("Hello, World!");
+    }
+    ''';
     return MaterialApp(
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: _themeColor),
-          fontFamily: "Abel",
-          useMaterial3: true),
-      home: Scaffold(
-        body: Center(
-            child: Stack(
-          children: [
-            SlideLottieIndicatorWidget(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: _themeColor),
+            fontFamily: "Abel",
+            useMaterial3: true),
+        home: Scaffold(
+          body: KeyboardListener(
+            focusNode: _focusNode,
+            autofocus: true,
+            onKeyEvent: _onKeyEvent,
+            child: Stack(children: [
+              SlideLottieIndicatorWidget(
+                  sceneController: _sceneController,
+                  scenes: value(Slides.intro),
+                  title: null,
+                  width: 240 * _indicatorDimensionFactor,
+                  height: 240 * _indicatorDimensionFactor,
+                  name: "assets/presentation/lottie/waiting_vanilla.json"),
+              SlideLottieIndicatorWidget(
+                  sceneController: _sceneController,
+                  scenes: value(Slides.introPleaseWait),
+                  title: "please wait...",
+                  width: 240 * _indicatorDimensionFactor,
+                  height: 240 * _indicatorDimensionFactor,
+                  name: "assets/presentation/lottie/waiting_vanilla.json"),
+              SlideImageWidget(
+                  scenes: value(Slides.introAlbertGirl),
+                  sceneController: _sceneController,
+                  title: "please wait...",
+                  name: "assets/presentation/images/albert_girl.png"),
+              SlideImageWidget(
+                  scenes: value(Slides.introAlbertStove),
+                  sceneController: _sceneController,
+                  title: "please wait...",
+                  name: "assets/presentation/images/albert_stove.png"),
+              SlideTextWidget(
+                scenes: value(Slides.title),
                 sceneController: _sceneController,
-                scenes: value(Slides.intro),
-                title: null,
-                width: 240 * _indicatorDimensionFactor,
-                height: 240 * _indicatorDimensionFactor,
-                name: "assets/presentation/lottie/waiting_vanilla.json"),
-            SlideLottieIndicatorWidget(
+                text: "the perception of time\nin user interface",
+              ),
+              SlideImageWidget(
+                  scenes: value(Slides.patience),
+                  sceneController: _sceneController,
+                  title: "patience",
+                  name: "assets/presentation/images/patience.png"),
+              SlideImageWidget(
+                  scenes: value(Slides.standards),
+                  sceneController: _sceneController,
+                  title: "standards",
+                  name: "assets/presentation/images/standarts.png"),
+              SlideTextWidget(
+                scenes: value(Slides.now),
                 sceneController: _sceneController,
-                scenes: value(Slides.introPleaseWait),
-                title: "please wait...",
-                width: 240 * _indicatorDimensionFactor,
-                height: 240 * _indicatorDimensionFactor,
-                name: "assets/presentation/lottie/waiting_vanilla.json"),
-            SlideImageWidget(
-                scenes: value(Slides.relativityAlbertGirl),
+                text: "now",
+              ),
+              SlideImageWidget(
+                  scenes: value(Slides.nowEye),
+                  sceneController: _sceneController,
+                  title: "now",
+                  name: "assets/presentation/images/eye.png"),
+              SlideImageWidget(
+                  scenes: value(Slides.nowHardware),
+                  sceneController: _sceneController,
+                  title: "now",
+                  name: "assets/presentation/images/hardware.png"),
+              SlideTextWidget(
+                scenes: value(Slides.inAMoment),
                 sceneController: _sceneController,
-                title: "relativity",
-                name: "assets/presentation/images/albert_girl.png"),
-            SlideImageWidget(
-                scenes: value(Slides.relativityAlbertStove),
+                text: "in a moment",
+              ),
+              SlideImageWidget(
+                  scenes: value(Slides.inAMomentInternet),
+                  sceneController: _sceneController,
+                  title: "in a moment",
+                  name: "assets/presentation/images/internet.png"),
+              SlideLottieIndicatorWidget(
+                  sceneController: _sceneController,
+                  scenes: value(Slides.inAMomentInfinity),
+                  title: "in a moment",
+                  width: 240 * _indicatorDimensionFactor,
+                  height: 240 * _indicatorDimensionFactor,
+                  name: "assets/presentation/lottie/waiting_infinite.json"),
+              SlideTextWidget(
+                scenes: value(Slides.later),
                 sceneController: _sceneController,
-                title: "relativity",
-                name: "assets/presentation/images/albert_stove.png"),
-            SlideLottieIndicatorWidget(
+                text: "later",
+              ),
+              SlideImageWidget(
+                  scenes: value(Slides.laterRoleplaying),
+                  sceneController: _sceneController,
+                  title: "later",
+                  name: "assets/presentation/images/roleplaying.jpg"),
+              SlideImageWidget(
+                  scenes: value(Slides.laterPong),
+                  sceneController: _sceneController,
+                  title: "later",
+                  name: "assets/presentation/images/pong.jpeg"),
+              SlideTextWidget(
+                scenes: value(Slides.inTime),
                 sceneController: _sceneController,
-                scenes: value(Slides.waiting_2),
-                title: "relativity",
-                width: 240 * _indicatorDimensionFactor,
-                height: 240 * _indicatorDimensionFactor,
-                name: "assets/presentation/lottie/waiting_infinite.json"),
-            SlideImageWidget(
-                scenes: value(Slides.hardware),
+                text: "in time",
+              ),
+              SlideWidget(
+                scenes: value(Slides.inTimeIndicator),
                 sceneController: _sceneController,
-                title: null,
-                name: "assets/presentation/images/hardware.png"),
-          ],
-        )),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _nextSlide,
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
-        ),
-      ),
-    );
+                title: "in time",
+                content: Center(
+                    child: SizedBox(
+                  width: 300,
+                  height: 24,
+                  child: LinearProgressIndicator(value: 0.5),
+                )),
+              ),
+              SlideTextWidget(
+                scenes: value(Slides.summary),
+                sceneController: _sceneController,
+                size: 72,
+                text: "now: 0 - 50ms\nin a moment: 50ms - 10s\nlater: 10s - ∞",
+              ),
+              SlideContentSceneWidget(
+                  sceneController: _sceneController,
+                  scenes: values([
+                    Slides.widgetContent,
+                    Slides.widgetScrim,
+                    Slides.widgetProgress,
+                    Slides.widgetTimeout
+                  ]),
+                  child: Stack(
+                    children: [
+                      SlideScrimWidget(
+                          controller: _sceneController,
+                          scenes: values([
+                            Slides.widgetScrim,
+                            Slides.widgetProgress,
+                            Slides.widgetTimeout
+                          ]),
+                          child: Content()),
+                      SlideProgressWidget(
+                        controller: _sceneController,
+                        scenes: value(Slides.widgetProgress),
+                      ),
+                      SlideTimeoutWidget(
+                        scenes: value(Slides.widgetTimeout),
+                        controller: _sceneController,
+                        indicator: const TimeoutContent(),
+                      )
+                    ],
+                  )),
+              SlideContentSceneWidget(
+                  sceneController: _sceneController,
+                  scenes: values([
+                    Slides.waitingContent,
+                    Slides.waiting,
+                  ]),
+                  child: WaitingWidget(
+                      show: _sceneController.getScene() == Slides.waiting,
+                      timeout: const Duration(seconds: 5),
+                      timeoutIndicator: const TimeoutContent(),
+                      child: const Content())),
+              SlideImageWidget(
+                  scenes: value(Slides.qr),
+                  sceneController: _sceneController,
+                  title: "pub.dev/packages/waiting",
+                  name: "assets/presentation/images/qr.png"),
+              SlideTextWidget(
+                scenes: value(Slides.acquiredPatience),
+                sceneController: _sceneController,
+                text: "acquired patience",
+              ),
+              SlideContentSceneWidget(
+                  sceneController: _sceneController,
+                  scenes: value(Slides.acquiredPatienceCode),
+                  child: Center(
+                      child: HighlightView(
+                    acquiredPatienceCode,
+                    languageId: dart.id,
+                    theme: githubTheme,
+                    textStyle: const TextStyle(
+                      fontSize: 32,
+                    ),
+                  ))),
+              SlideTextWidget(
+                scenes: value(Slides.thanks),
+                sceneController: _sceneController,
+                text: "thank you",
+              ),
+            ]),
+          ),
+        ));
   }
 
   Color adjustHue(Color baseColor, double value) {
@@ -140,9 +311,66 @@ class PresentationAppState extends State<PresentationApp>
     return MaterialColor(color.value, shades);
   }
 
-  void _nextSlide() {
+  void _onKeyEvent(event) {
+    if (event! is KeyUpEvent) {
+      return;
+    }
+    switch (event.logicalKey) {
+      case LogicalKeyboardKey.arrowLeft:
+        _back();
+        break;
+      case LogicalKeyboardKey.arrowRight:
+        _forward();
+        break;
+    }
+  }
+
+  void _back() {
     setState(() {
-      _sceneController.schedule(_sceneController.forward());
+      var back = _sceneController.back();
+      if (back != null) {
+        _sceneController.schedule(back);
+      }
     });
+  }
+
+  void _forward() {
+    setState(() {
+      var forward = _sceneController.forward();
+      if (forward != null) {
+        _sceneController.schedule(forward);
+      }
+    });
+  }
+}
+
+class TimeoutContent extends StatelessWidget {
+  const TimeoutContent({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text("please wait...",
+          style:
+              TextStyle(fontSize: 32, color: Theme.of(context).primaryColor)),
+      SizedBox(
+          width: 150,
+          child: const Opacity(opacity: 0.7, child: LinearProgressIndicator())),
+    ]));
+  }
+}
+
+class Content extends StatelessWidget {
+  const Content({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: SizedBox(width: 300, height: 300, child: FlutterLogo()));
   }
 }

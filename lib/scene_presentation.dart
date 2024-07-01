@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import 'package:waiting/scene/scene_blur.dart';
 import 'package:waiting/scene/scene_controller.dart';
 import 'package:waiting/scene/scene_fade.dart';
+import 'package:waiting/waiting.dart';
 
 class SlideWidget extends StatelessWidget {
   final SceneController sceneController;
@@ -146,9 +146,6 @@ class SlideLottieIndicatorWidgetState extends State<SlideLottieIndicatorWidget>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this)
-      ..duration = const Duration(seconds: 2)
-      ..repeat();
   }
 
   @override
@@ -165,7 +162,7 @@ class SlideLottieIndicatorWidgetState extends State<SlideLottieIndicatorWidget>
                 Theme.of(context).primaryColor,
                 BlendMode.srcATop,
               ),
-              child: Lottie.asset(widget.name, controller: _controller))),
+              child: Lottie.asset(widget.name))),
     );
   }
 }
@@ -201,5 +198,137 @@ class SlideImageWidget extends StatelessWidget {
                 child: Image.asset(name, fit: BoxFit.cover),
               )),
         ));
+  }
+}
+
+class SlideTextWidget extends StatelessWidget {
+  const SlideTextWidget({
+    super.key,
+    required this.scenes,
+    required this.sceneController,
+    required this.text,
+    this.size = 96
+  });
+
+  final bool Function(dynamic) scenes;
+  final SceneController sceneController;
+  final String text;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideWidget(
+        sceneController: sceneController,
+        scenes: scenes,
+        title: null,
+        content: Text(
+          text!,
+          style:
+              TextStyle(fontSize: size, color: Theme.of(context).primaryColor),
+        ));
+  }
+}
+
+
+
+class SlideScrimWidget extends StatelessWidget {
+  const SlideScrimWidget({
+    super.key,
+    required this.scenes,
+    required this.controller,
+    required this.child,
+  });
+
+  final bool Function(dynamic) scenes;
+  final SceneController controller;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeSceneWidget(
+      controller: controller,
+      scenes: scenes,
+      opacity: (AnimationController animationController) {
+        return Tween<double>(
+          begin: 1.0,
+          end: 0.33,
+        ).animate(CurvedAnimation(
+          parent: animationController,
+          curve: Curves.easeInOut, // Apply curve here
+        ));
+      },
+      enterDuration: const Duration(milliseconds: 200),
+      exitDuration: const Duration(milliseconds: 200),
+      child: child,
+    );
+  }
+}
+
+class SlideProgressWidget extends StatelessWidget {
+  const SlideProgressWidget(
+      {super.key,
+        required this.scenes,
+        required this.controller,
+        this.indicator = const DefaultIndicator()});
+
+  final bool Function(dynamic) scenes;
+
+  final SceneController controller;
+
+  final Widget indicator;
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeSceneWidget(
+      controller: controller,
+      scenes: scenes,
+      opacity: (AnimationController animationController) {
+        return Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(CurvedAnimation(
+          parent: animationController,
+          curve: Curves.easeInOut, // Apply curve here
+        ));
+      },
+      enterDuration: const Duration(milliseconds: 400),
+      exitDuration: const Duration(milliseconds: 200),
+      child: indicator,
+    );
+  }
+}
+
+class SlideTimeoutWidget extends StatelessWidget {
+  const SlideTimeoutWidget(
+      {super.key,
+        required this.scenes,
+        required this.controller,
+        this.indicator = const DefaultTimeoutIndicator()});
+
+  final bool Function(dynamic) scenes;
+
+  final SceneController controller;
+
+  final Widget indicator;
+
+  @override
+  Widget build(BuildContext context) {
+    return FadeSceneWidget(
+      controller: controller,
+      scenes: scenes,
+      opacity: (AnimationController animationController) {
+        return Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(CurvedAnimation(
+          parent: animationController,
+          curve: Curves.easeInOut, // Apply curve here
+        ));
+      },
+      enterDuration: const Duration(milliseconds: 400),
+      exitDuration: const Duration(milliseconds: 200),
+      child: indicator,
+    );
   }
 }
