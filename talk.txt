@@ -1,0 +1,350 @@
+Welcome
+
+<intro>
+Just a moment...
+
+And now you're waiting
+
+<introPleaseWait>
+
+Waiting for the presentation to start
+and it took a while
+15 seconds to be precise
+
+how react to this time in various emotions
+bored, annoyed, frustrated, excited, 
+can't wait to start 
+
+how you feel is dependent what you expect.
+some of you chose this talk because interesting
+some of you didnt find anything else and just wanted to a chair to set
+
+What is waiting?
+Waiting is experiencing time
+phylosopical approach 
+movies, books, art and science have already covered that
+cheesy to talk about it   
+summarize
+that time is pretty important to everything
+
+time has to be differentiated into real time and perceived time
+cinema in bremen
+sneak preview
+everything from transformers or french family drama
+entertained or touched by the movie 2 hours feel much shorter
+bored and uninteresetd in the movie feels much longer
+
+to summarize with a famous quote:
+
+<albertGirl>
+
+"If you're sitting with a nice person for hours, it feels like a minute."
+
+<albertStove>
+
+"If you're sitting on a hot stove for a minute, it feels like hours"
+guessed its from albert einstein. 
+
+perceive time is dependend of the context its happening in.  
+And this applies to literally everything. 
+And that everything obviously includes software. 
+
+<title>
+
+Talking about
+"The perception of time in user interfaces"
+I'm André Schmidt - Di Salvo
+the senior flutter & android developer at Open Xchange
+software development for around 20 years
+developed for startups and also multinational cooperations
+
+one thing in common
+all software needs to load 
+which makes the user to wait
+
+waiting requires one fuel 
+that is patience
+
+<patience>
+
+and when patience is lost a reaction will follow
+if i dont like the movie in the cinema i can leave
+
+some game -> uninstall
+game i preordered -> excited while , change to frustration
+cloud storage -> frustrated, annoyed 
+
+if patience of user runs out, a bad review is immenent.
+So we need to handle his patience.
+
+but first we have to ask the question:
+how long is too long?
+
+
+<military>
+
+many papers and standards about time 
+for example, in 1968 "Response Time in Man-Computer Conversational Transactions" 
+and many standards for the millitary sector
+where its even critical that a process finishes in a given time 
+
+For our talk
+Lets start with the category 
+that is sometimes not even regarded as a waiting time 
+its called it "Now"
+
+<now>
+
+Example: you open whatsapp, telegram, whatever
+create and you send it
+and it appears in your chat
+
+how much time do we have for something feel instant?
+the answer is 50 milliseconds
+
+<nowEye>
+
+how long we need to become concious of a stimulus 
+
+if we breach the limit the user will feel a lag
+which is basically micro waiting
+
+even if its just a chat bubble to display, 
+50 ms not a lot of time
+our code: complex UI, especially in flutter, 
+if our tree of widgets is written poorly
+but we can optimize and benchmark our own code
+and hooray, we got under 50ms   
+...on our test device
+
+chaos is ruling our app
+<hardware>
+many factors we dont know
+usually we dont know much
+about the device we're running on: how old, how powerful
+about the state of the system: battery saver 
+about other apps affecting our apps performance
+
+so optimizing far below our 50ms for presentation is key
+because you just dont know how your app will be affected
+
+very petty to think about such lags
+if many lags your whole app feels sluggish
+or your new feature even stands out 
+because its the only part of the app that lags
+
+in our example there's one trick:
+we fake it till we make it
+
+lets go through everything that needs to be done for message to be send
+- persistence
+- networking
+- presentation
+we primarily pretend that its done
+and if it takes a while or even fails due to being offline, a tiny indicator lets us know
+
+But what if it takes noticiable longer than an instant? 
+lets find out in our next category:
+In A Moment
+
+<in a moment>
+
+And a fine example is a login
+you enter your username and password and login
+
+Here we can't fake it till we make it
+we dont have anything
+if our login data is correct, we have to get all kinds of data and resources to prepare our app for the user 
+
+king of chaos
+<the internet>
+the internet
+about milliseconds from hardware and processes
+but the internet is something different 
+
+a bit philosophical
+browser -> web site = thats not the internet
+thats data on a server
+the internet is time to wait until web site is ready
+
+just think of all the factors of this waiting time
+are you on wifi or on mobile signal?
+are you one of those awfully slow free wifis? 
+or at home with your fast wifi?
+if your on mobile signal:
+in the city center? or on a train going into a tunnel?
+is the server next door or in greenland?
+
+you dont know
+so the time ranges from milliseconds to theoretically infinity
+
+<infinity>
+
+only solution again infinity
+abort after a timeouts
+usually about 10 seconds
+but beware 
+in case of huge datasets not the not connection is cause
+but the server work
+carefully select the timeout to respect the server work
+
+you remember the beginning of the presentation
+10 seconds is pretty long 
+
+so what if we need longer than 10 seconds
+
+<later>
+
+enter "later"
+
+example: again the login
+
+if an important process takes longer than usual
+excuse yourself
+this is taking longer than usual.
+please wait.
+
+we can evaluate certain things
+and inform the user accordingly
+know the amount of data to expect
+identify the connection type
+inform the user
+option to cancel by himself 
+
+example: a game loading
+
+huge amounts of assets like textures have to be loaded
+
+<rpg>
+
+games got creative over the years
+the decorated screens 
+like role playing games give you tips and hints
+or racing games showing statistics
+
+even in 1993, strike commander
+revolutionary graphics for the time, took minutes to load
+so you could play pong
+
+<pong>
+
+advantage
+you know is going to take long
+so why not go overboard
+
+in short we give an explanation 
+like the cuase for the delay
+or we have to entertain the user 
+while waiting 
+
+there's one other category: in time
+
+<in time>
+
+example: download
+
+in contrast to indetermined progress we have a determined progress.
+we know what needs to be loaded and how fast we can load it.
+
+<determined progress>
+
+nowadays with streaming etc. this is getting pretty rare.
+
+example: games loading
+
+on top many games rather rely on "fake it till you make it" to load data
+for example
+squeezing through tight spaces in a game 
+reduces viewport
+so when the player is locked into a place 
+loading of new scenries can be done in the background 
+
+also determined because we know the stages
+textures, sounds, logic
+that need to be loaded
+
+many games nowadays resort to indermined progress indicators because
+this effect is just to well known:
+
+<meme>
+
+so for today, we skip this category
+seems outdated
+
+to summarize
+
+<summary>
+
+now: 0 to ~50ms
+in a moment: ~50ms to 10 seconds
+later: over 10 seconds
+
+lets create a widget for everything
+
+but we're in a dilemma
+if "fake is till you make it" is not possible
+and with the internet as a factor
+waiting might a very short or quite a long time
+we dont want to show nothing for a long time
+and we also don't want to bombard the user with an explanation or entertainment if the loading takes a very short time
+
+so we have to slowly escalate and transistion between the states
+
+lets use the famous flutter logo as our content
+
+<widgetContent>
+
+for the transistion between now and in a moment
+ we can use a scrim
+ a scrim just fades out the underlying content
+as you can see it covers short times 
+
+<widgetScrim>
+
+for the "in a moment" category 
+old friend 
+the indetermined progress indicator
+can't go wrong with that 
+every generation alive knows this widget
+
+<widgetIndicator>
+
+longer than 10 seconds we show something more
+in this example just a lame excuse
+
+<widgetTimeout>
+
+putting it altogether it looks like this:
+
+<waiting>
+
+well this takes a lot of animations and timing to achieve
+if only this would be a flutter package
+ready to use 
+
+<qrCode>
+
+lucky you
+wrote a waiting widget that does that
+if you scan this qr code
+you'll find the package for the waiting widget
+customizable
+exchange the loading indicator for the "in a moment" category
+define a widget for the "later" category 
+here's the url if you dont like 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

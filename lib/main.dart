@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_highlighting/flutter_highlighting.dart';
-import 'package:flutter_highlighting/themes/github.dart';
-import 'package:highlighting/languages/dart.dart';
 import 'package:waiting/scene/scene_controller.dart';
 import 'package:waiting/waiting.dart';
 import 'package:waiting_presentation/scene_presentation.dart';
@@ -10,6 +7,7 @@ import 'package:waiting_presentation/scene_presentation.dart';
 enum Slides {
   intro,
   introPleaseWait,
+  introCinema,
   introAlbertGirl,
   introAlbertStove,
   title,
@@ -35,7 +33,6 @@ enum Slides {
   waiting,
   qr,
   acquiredPatience,
-  acquiredPatienceCode,
   thanks,
 }
 
@@ -84,17 +81,12 @@ class PresentationAppState extends State<PresentationApp>
 
   @override
   Widget build(BuildContext context) {
-    var acquiredPatienceCode = '''
-    main() {
-      print("Hello, World!");
-    }
-    ''';
+    var colorScheme = ColorScheme.fromSeed(seedColor: _themeColor)
+        .copyWith(background: const Color(0xFFDDDDDD));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: _themeColor),
-            fontFamily: "Abel",
-            useMaterial3: true),
+            colorScheme: colorScheme, fontFamily: "Abel", useMaterial3: true),
         home: Scaffold(
           body: KeyboardListener(
             focusNode: _focusNode,
@@ -116,6 +108,11 @@ class PresentationAppState extends State<PresentationApp>
                   height: 240 * _indicatorDimensionFactor,
                   name: "assets/presentation/lottie/waiting_vanilla.json"),
               SlideImageWidget(
+                  scenes: value(Slides.introCinema),
+                  sceneController: _sceneController,
+                  title: "please wait...",
+                  name: "assets/presentation/images/cinema.png"),
+              SlideImageWidget(
                   scenes: value(Slides.introAlbertGirl),
                   sceneController: _sceneController,
                   title: "please wait...",
@@ -128,7 +125,7 @@ class PresentationAppState extends State<PresentationApp>
               SlideTextWidget(
                 scenes: value(Slides.title),
                 sceneController: _sceneController,
-                text: "the perception of time\nin user interface",
+                text: "the perception of time\nin user interfaces",
               ),
               SlideImageWidget(
                   scenes: value(Slides.patience),
@@ -198,8 +195,8 @@ class PresentationAppState extends State<PresentationApp>
                 title: "in time",
                 content: Center(
                     child: SizedBox(
-                  width: 300,
-                  height: 24,
+                  width: 400,
+                  height: 36,
                   child: LinearProgressIndicator(value: 0.5),
                 )),
               ),
@@ -259,18 +256,6 @@ class PresentationAppState extends State<PresentationApp>
                 sceneController: _sceneController,
                 text: "acquired patience",
               ),
-              SlideContentSceneWidget(
-                  sceneController: _sceneController,
-                  scenes: value(Slides.acquiredPatienceCode),
-                  child: Center(
-                      child: HighlightView(
-                    acquiredPatienceCode,
-                    languageId: dart.id,
-                    theme: githubTheme,
-                    textStyle: const TextStyle(
-                      fontSize: 32,
-                    ),
-                  ))),
               SlideTextWidget(
                 scenes: value(Slides.thanks),
                 sceneController: _sceneController,
